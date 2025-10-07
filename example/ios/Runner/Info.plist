@@ -27,9 +27,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-    <string></string>
+    <string>此应用需要访问相册权限以保存图片和视频</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>获取相册权限</string>
+    <key>NSCameraUsageDescription</key>
+    <string>此应用需要访问相机权限以拍摄照片</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
