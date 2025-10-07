@@ -24,16 +24,13 @@ class PermissionUtil {
   /// 安卓权限
   static List<Permission> androidPermissions = <Permission>[
     // 在这里添加需要的权限
-    Permission.storage,
-    Permission.photos,
-    Permission.camera
+    Permission.storage
   ];
 
   /// ios权限
   static List<Permission> iosPermissions = <Permission>[
     // 在这里添加需要的权限
-    Permission.photos,
-    Permission.camera
+    Permission.storage
   ];
 
   static Future<Map<Permission, PermissionStatus>> requestAll() async {

@@ -1,13 +1,10 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-
 import 'utils.dart';
 
 void main() => runApp(MyApp());
@@ -36,20 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _requestPermissions();
-  }
-
-  _requestPermissions() async {
-    // 请求权限
-    Map<Permission, PermissionStatus> result = await PermissionUtil.requestAll();
-
-    // 检查权限状态
-    if (PermissionUtil.isDenied(result)) {
-      // 如果权限被拒绝，显示对话框
-      if (mounted) {
-        PermissionUtil.showDeniedDialog(context);
-      }
-    }
+    PermissionUtil.requestAll();
   }
 
   @override
@@ -113,14 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _saveLocalImage() async {
-    // 检查权限
-    bool hasPermission = await PermissionUtil.checkGranted(Permission.photos);
-    if (!hasPermission) {
-      Utils.toast("请先授权相册权限");
-      return;
-    }
-
     RenderRepaintBoundary boundary = _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
     ui.Image image = await boundary.toImage();
     ByteData? byteData = await (image.toByteData(format: ui.ImageByteFormat.png));
     if (byteData != null) {
@@ -131,13 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _saveNetworkImage() async {
-    // 检查权限
-    bool hasPermission = await PermissionUtil.checkGranted(Permission.photos);
-    if (!hasPermission) {
-      Utils.toast("请先授权相册权限");
-      return;
-    }
-
     var response = await Dio().get(
         "https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=a62e824376d98d1069d40a31113eb807/838ba61ea8d3fd1fc9c7b6853a4e251f94ca5f46.jpg",
         options: Options(responseType: ResponseType.bytes));
